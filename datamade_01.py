@@ -11,14 +11,15 @@ def main(args):
     pathToInputFile = os.path.join(os.getcwd(), "legislators.csv")
 
     # parse CLI arguments
+    helpMessage = "\nflags:\n -i, --inputfile <inputfile>\n"
     try:
         opts, args = getopt.getopt(args,"hi:",["inputfile="])
     except getopt.GetoptError:
-        print("datamade_01.py -i <inputfile>")
+        print(helpMessage)
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("datamade_01.py -i <inputfile>")
+            print(helpMessage)
             sys.exit()
         elif opt in ("-i", "--inputfile"):
             pathToInputFile = arg
@@ -36,11 +37,12 @@ def main(args):
     with open(pathToInputFile, "r") as inputFile:
         inputFileReader = csv.DictReader(inputFile)
         for entry in inputFileReader:
-                timedelta = datetime.datetime.today() - datetime.datetime.strptime(entry["birthdate"], '%Y-%m-%d')
-                if entry["party"] == "D" and timedelta.days/365 < 45:
-                    entries45.append(entry)
-                if entry["party"] == "R" and entry["twitter_id"] != "" and entry["youtube_url"] != "":
-                    entriesRepSocial.append(entry)
+            # calculate time since birthdate
+            timedelta = datetime.datetime.today() - datetime.datetime.strptime(entry["birthdate"], '%Y-%m-%d')
+            if entry["party"] == "D" and timedelta.days/365 < 45:
+                entries45.append(entry)
+            if entry["party"] == "R" and entry["twitter_id"] != "" and entry["youtube_url"] != "":
+                entriesRepSocial.append(entry)
 
     # write dictionaries to output files
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
