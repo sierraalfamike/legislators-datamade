@@ -7,6 +7,8 @@ import getopt
 import os
 
 def main(args):
+
+    print("Hello DataMade, processing the list of legislators...\n")
     # set default input file as legislators.csv in current directory
     pathToInputFile = os.path.join(os.getcwd(), "legislators.csv")
 
@@ -52,13 +54,15 @@ def main(args):
         outputEntries45writer = csv.DictWriter(outputEntries45, fieldnames=entries45[0].keys())
         outputEntries45writer.writeheader()
         outputEntries45writer.writerows(entries45)
-    print("wrote first file to " + pathToOutputEntries45)
+    print("found " + str(len(entries45)) + " legislators younger than 45.")
+    print("wrote first file to " + pathToOutputEntries45 + "\n")
 
     with open(pathToOutputEntriesRepSocial, "w", newline='') as outputEntriesRepSocial:
         outputEntriesRepSocialwriter = csv.DictWriter(outputEntriesRepSocial, fieldnames=entriesRepSocial[0].keys())
         outputEntriesRepSocialwriter.writeheader()
         outputEntriesRepSocialwriter.writerows(entriesRepSocial)
-    print("wrote second file to " + pathToOutputEntriesRepSocial)
+    print("found " + str(len(entriesRepSocial)) + " legislators with a Twitter account and YouTube Channel.")
+    print("wrote second file to " + pathToOutputEntriesRepSocial + "\n")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
