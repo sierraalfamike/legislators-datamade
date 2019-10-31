@@ -46,17 +46,19 @@ def main(args):
 
     # write dictionaries to output files
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-    pathToOutputEntries45 = r".\sc_DataMade_45young_"+timestamp+r".csv"
-    pathToOutputEntriesRepSocial = r".\sc_DataMade_RepSocial_"+timestamp+r".csv"
+    pathToOutputEntries45 = r"sc_DataMade_45young_"+timestamp+r".csv"
+    pathToOutputEntriesRepSocial = r"sc_DataMade_RepSocial_"+timestamp+r".csv"
     with open(pathToOutputEntries45, "w", newline='') as outputEntries45:
         outputEntries45writer = csv.DictWriter(outputEntries45, fieldnames=entries45[0].keys())
         outputEntries45writer.writeheader()
         outputEntries45writer.writerows(entries45)
+    print("wrote first file to " + pathToOutputEntries45)
 
     with open(pathToOutputEntriesRepSocial, "w", newline='') as outputEntriesRepSocial:
         outputEntriesRepSocialwriter = csv.DictWriter(outputEntriesRepSocial, fieldnames=entriesRepSocial[0].keys())
         outputEntriesRepSocialwriter.writeheader()
         outputEntriesRepSocialwriter.writerows(entriesRepSocial)
+    print("wrote second file to " + pathToOutputEntriesRepSocial)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
